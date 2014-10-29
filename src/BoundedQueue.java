@@ -2,47 +2,49 @@ import java.util.Arrays;
 
 
 public class BoundedQueue {
-	private int enqueueIndex;// Separate index to ensure enqueue happens at the end
-    private int dequeueIndex;// Separate index to ensure dequeue happens at the
-                            // start
+	//create variables for index for enqueue and dequeue
+	private int enIndex;
+    private int deIndex;
+    //create variable for array (queue) and queue count
     private int[] items;
     private int count;
-    // Lazy to add javadocs please provide
+    //constructor allows us to initialize queue with int
     public BoundedQueue(int size) {
-        enqueueIndex = 0;
-        dequeueIndex = 0;
+        enIndex = 0;
+        deIndex = 0;
         items = new int[size];
     }
-    // Lazy to add javadocs please provide
+    //store integer to queue when it is not full; if it is full display error message
     public void enqueue(int newNumber) {
         if (count == items.length){
             System.out.println("Sorry queue size has been maxed out :(");
         }
-        items[enqueueIndex] = newNumber;
-        if(++enqueueIndex == items.length){
-        	enqueueIndex = 0;
+        items[enIndex] = newNumber;
+        if(++enIndex == items.length){
+        	enIndex = 0;
         }
         ++count;
     }
-    // Lazy to add javadocs please provide
+    //remove item from the queue if the queue is not empty
     public int dequeue() {
-        if (count == 0)
-            throw new IllegalStateException();
-        int item = items[dequeueIndex];
-        items[dequeueIndex] = 0;
-        if(++dequeueIndex == items.length){
-        	dequeueIndex = 0;
+        if (count == 0){
+            System.out.println("Your queue is empty!");
+        }
+        int item = items[deIndex];
+        items[deIndex] = 0;
+        if(++deIndex == items.length){
+        	deIndex = 0;
         }
         --count;
         return item;
     }
-
+    //simply function to print queue items
     @Override
     public String toString() {
         return Arrays.toString(items);
     }
 	
-	
+	//basic test to see bounded queue functionality
 	public static void main(String[] args){
 		System.out.println("Here's your Bounded Queue:");
 		BoundedQueue test = new BoundedQueue(5);
